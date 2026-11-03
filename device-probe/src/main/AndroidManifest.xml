@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:allowBackup="false" android:label="共情星结构探针" android:usesCleartextTraffic="false" />
+    <instrumentation android:name="com.lxz.empathystar.DeviceAcceptanceInstrumentation"
+        android:targetPackage="com.lxz.empathystar.probe" android:functionalTest="true" />
+</manifest>

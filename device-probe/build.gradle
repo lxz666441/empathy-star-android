@@ -1,0 +1,30 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.lxz.empathystar.probe'
+    compileSdk 36
+    defaultConfig {
+        applicationId 'com.lxz.empathystar.probe'
+        minSdk 29
+        targetSdk 36
+        versionCode 1
+        versionName '1.0'
+    }
+    sourceSets.main.java.srcDirs = ['../app/src/androidTest/java', layout.buildDirectory.dir('generated/analysis-core')]
+}
+
+// A narrow generated source directory prevents javac implicitly compiling the
+// Android product/service dependencies while testing these two pure contracts.
+tasks.register('copyAnalysisCore', Copy) {
+    from('../app/src/main/java') {
+        include '**/ChatAnalysis.java', '**/KnowledgeTerms.java'
+        include '**/ChatAppAdapter.java', '**/WeChatAdapter.java', '**/QqAdapter.java'
+        include '**/ChatSnapshot.java', '**/ChatNodeProfile.java', '**/ChatSurfacePolicy.java'
+        include '**/AnalysisCardStack.java'
+        include '**/ConversationSelection.java', '**/ConversationSummary.java', '**/ConversationSummaryCard.java'
+        include '**/ScreenReadResult.java', '**/ChatContentPolicy.java'
+        include '**/QqGroupAdapter.java'
+    }
+    into layout.buildDirectory.dir('generated/analysis-core')
+}
+tasks.named('preBuild').configure { dependsOn 'copyAnalysisCore' }
